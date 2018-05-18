@@ -10,7 +10,7 @@ PYTHON_LIBS = $(PYTHON_PREFIX)/lib
 override LDFLAGS += -L $(PYTHON_LIBS) $(shell $(PYTHON_CONFIG) --libs)
 DYLDFLAGS = -Wl,-rpath,$(PYTHON_LIBS)
 
-all: resolved.json
+all: counters.json
 
 #------------------------------------------------------------#
 #Compiling the top creation script
@@ -30,15 +30,6 @@ rosslib_dec.o: rosslib_dec.cpp rosslib_dec.h
 libcoreir-rosslib.dylib: rosslib_dec.o
 	$(CXX) $(CXXFLAGS) rosslib_dec.o -install_name "@rpath/libcoreir-rosslib.dylib" $(LDFLAGS) -dynamiclib $(DYLDFLAGS) -o libcoreir-rosslib.dylib
 
-#------------------------------------------------------------#
-#Creating the rosslib definition executable
-#------------------------------------------------------------#
-rosslib_def.o: rosslib_def.h rosslib_def.cpp rosslib_dec.h
-	$(CXX) $(CXXFLAGS) -c rosslib_def.cpp -o rosslib_def.o
-
-rosslib_def: rosslib_def.o rosslib_dec.o
-	$(CXX) rosslib_def.o rosslib_dec.o $(LDFLAGS) $(DYLDFLAGS) -o rosslib_def
-
 
 #------------------------------------------------------------#
 #Actual project flow
@@ -50,14 +41,6 @@ counters.json: create_counters
 #output all the unresolved symbols
 unresolved.json: counters.json
 	coreir -i counters.json -p cullgraph,unresolved -a -o unresolved.json
-
-#Pass in all the unresolved symbols to the definition exe
-resolved.json: unresolved.json rosslib_def
-	./rosslib_def unresolved.json resolved.json
-
-#Does not actually work yet. TODO
-merged.json: counters.json resolved.json
-	coreir -i counters.json,resolved.json -o merged.json
 
 clean:
 	-rm *.json

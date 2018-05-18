@@ -7,13 +7,13 @@ using namespace CoreIR;
 //Making a slow counter.
 
 int main() {
-  
+
   Context* c = newContext();
   Namespace* g = c->getGlobal();
 
   //This is the "header" file include
   CoreIRLoadLibrary_rosslib(c);
-  
+
   // Define the slow counter
   Type* topType = c->Record({
     {"clk",c->Named("coreir.clkIn")},
@@ -27,7 +27,7 @@ int main() {
     def->addInstance("count_slow","rosslib.counter",{{"width",Const::make(c,16)},{"has_en",Const::make(c,true)}});
     def->addInstance("eq0","coreir.eq",{{"width",Const::make(c,23)}});
     def->addInstance("c0","coreir.const",{{"width",Const::make(c,23)}},{{"value",Const::make(c,23,0)}});
-    
+
     def->connect("self.clk","count_fast.clk");
     def->connect("self.clk","count_slow.clk");
     def->connect("count_slow.out","self.out");
@@ -37,8 +37,8 @@ int main() {
   }
   top->setDef(def);
   c->setTop(top);
-  
-  c->runPasses({"cullgraph"});
+
+  c->runPasses({"rungenerators", "cullgraph"});
   if (!saveToFile(c,"counters.json")) {
     cout << "Save to file Failed!!!";
     exit(1);
