@@ -1,0 +1,3 @@
+*.o
+*.json
+__pycache__

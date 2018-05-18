@@ -34,10 +34,10 @@ libcoreir-rosslib.dylib: rosslib_dec.o
 #Creating the rosslib definition executable
 #------------------------------------------------------------#
 rosslib_def.o: rosslib_def.h rosslib_def.cpp rosslib_dec.h
-	$(CXX) -c rosslib_def.cpp -o rosslib_def.o
+	$(CXX) $(CXXFLAGS) -c rosslib_def.cpp -o rosslib_def.o
 
 rosslib_def: rosslib_def.o rosslib_dec.o
-	$(CXX) rosslib_def.o rosslib_dec.o $(LDFLAGS) -o rosslib_def
+	$(CXX) rosslib_def.o rosslib_dec.o $(LDFLAGS) $(DYLDFLAGS) -o rosslib_def
 
 
 #------------------------------------------------------------#

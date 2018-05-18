@@ -1,5 +1,6 @@
-import magma
+import magma as m
 import coreir
+import mantle
 
 @coreir.type_gen
 def counter_type_gen(context, values):
@@ -16,11 +17,8 @@ def counter_type_gen(context, values):
 
 @coreir.generator_
 def counter(context, values, module_def):
-    # width = values['width'].value
-    # doubleT = magma.Bits(width)
-    # double = magma.DefineCircuit("double", "I", magma.In(doubleT), "O", magma.Out(doubleT))
-    # shift_amount = 2
-    # output = magma.concat(double.I[shift_amount:width], magma.bits(0, shift_amount))
-    # magma.wire(output, double.O)
-    # magma.backend.coreir_.CoreIRBackend(context).compile_definition_to_module_definition(double, module_def)
-    raise NotImplemented()
+    width = values['width'].value
+    has_en = values['has_en'].value
+
+    Counter = mantle.DefineCounter(width, has_en=has_en)
+    magma.backend.coreir_.CoreIRBackend(context).compile_definition_to_module_definition(Counter, module_def)
