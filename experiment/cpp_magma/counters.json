@@ -1,0 +1,192 @@
+{"top":"global.top",
+"namespaces":{
+  "corebit":{
+    
+  },
+  "coreir":{
+    "generators":{
+      "const":{
+        "typegen":"coreir.out",
+        "genparams":{"width":"Int"},
+        "modules":[
+          [{"width":["Int",23]},{
+            "type":["Record",[
+              ["out",["Array",23,"Bit"]]
+            ]],
+            "modparams":{"value":["BitVector",23]}
+          }]
+        ]
+      },
+      "eq":{
+        "typegen":"coreir.binaryReduce",
+        "genparams":{"width":"Int"},
+        "modules":[
+          [{"width":["Int",23]},{
+            "type":["Record",[
+              ["in0",["Array",23,"BitIn"]],
+              ["in1",["Array",23,"BitIn"]],
+              ["out","Bit"]
+            ]]
+          }]
+        ]
+      }
+    },
+    "typegens":{
+      "binary":[{"width":"Int"},"sparse",[
+        
+      ]],
+      "binaryReduce":[{"width":"Int"},"sparse",[
+        [{"width":["Int",23]},["Record",[["in0",["Array",23,"BitIn"]],["in1",["Array",23,"BitIn"]],["out","Bit"]]]]
+      ]],
+      "concatTypeFun":[{"width0":"Int", "width1":"Int"},"sparse",[
+        
+      ]],
+      "extTypeFun":[{"width_in":"Int", "width_out":"Int"},"sparse",[
+        
+      ]],
+      "iBuf":[{"width":"Int"},"sparse",[
+        
+      ]],
+      "in":[{"width":"Int"},"sparse",[
+        
+      ]],
+      "memType":[{"depth":"Int", "has_init":"Bool", "width":"Int"},"sparse",[
+        
+      ]],
+      "muxType":[{"width":"Int"},"sparse",[
+        
+      ]],
+      "out":[{"width":"Int"},"sparse",[
+        [{"width":["Int",23]},["Record",[["out",["Array",23,"Bit"]]]]]
+      ]],
+      "pullResistor":[{"width":"Int"},"sparse",[
+        
+      ]],
+      "regRstType":[{"width":"Int"},"sparse",[
+        
+      ]],
+      "regType":[{"width":"Int"},"sparse",[
+        
+      ]],
+      "sliceTypeFun":[{"hi":"Int", "lo":"Int", "width":"Int"},"sparse",[
+        
+      ]],
+      "stripTypeFun":[{"type":"CoreIRType"},"sparse",[
+        
+      ]],
+      "triBuf":[{"width":"Int"},"sparse",[
+        
+      ]],
+      "unary":[{"width":"Int"},"sparse",[
+        
+      ]],
+      "unaryReduce":[{"width":"Int"},"sparse",[
+        
+      ]],
+      "wrapTypeFun":[{"type":"CoreIRType"},"sparse",[
+        
+      ]]
+    }
+  },
+  "global":{
+    "modules":{
+      "top":{
+        "type":["Record",[
+          ["clk",["Named","coreir.clkIn"]],
+          ["out",["Array",16,"Bit"]]
+        ]],
+        "instances":{
+          "c0":{
+            "genref":"coreir.const",
+            "genargs":{"width":["Int",23]},
+            "modargs":{"value":[["BitVector",23],"23'h000000"]}
+          },
+          "count_fast":{
+            "genref":"rosslib.counter",
+            "genargs":{"has_en":["Bool",false], "width":["Int",23]}
+          },
+          "count_slow":{
+            "genref":"rosslib.counter",
+            "genargs":{"has_en":["Bool",true], "width":["Int",16]}
+          },
+          "eq0":{
+            "genref":"coreir.eq",
+            "genargs":{"width":["Int",23]}
+          }
+        },
+        "connections":[
+          ["eq0.in0","c0.out"],
+          ["self.clk","count_fast.clk"],
+          ["eq0.in1","count_fast.out"],
+          ["self.clk","count_slow.clk"],
+          ["eq0.out","count_slow.en"],
+          ["self.out","count_slow.out"]
+        ]
+      }
+    }
+  },
+  "mantle":{
+    "typegens":{
+      "addType":[{"has_cin":"Bool", "has_cout":"Bool", "width":"Int"},"sparse",[
+        
+      ]],
+      "counter_type":[{"has_en":"Bool", "has_max":"Bool", "has_srst":"Bool", "width":"Int"},"sparse",[
+        
+      ]],
+      "regType":[{"has_clr":"Bool", "has_en":"Bool", "has_rst":"Bool", "width":"Int"},"sparse",[
+        
+      ]],
+      "wire":[{"type":"CoreIRType"},"sparse",[
+        
+      ]]
+    }
+  },
+  "memory":{
+    "typegens":{
+      "FifoMemType":[{"depth":"Int", "width":"Int"},"sparse",[
+        
+      ]],
+      "RamType":[{"depth":"Int", "width":"Int"},"sparse",[
+        
+      ]],
+      "RomType":[{"depth":"Int", "width":"Int"},"sparse",[
+        
+      ]],
+      "rowbufferType":[{"depth":"Int", "width":"Int"},"sparse",[
+        
+      ]]
+    }
+  },
+  "rosslib":{
+    "generators":{
+      "counter":{
+        "typegen":"rosslib.counterType",
+        "genparams":{"has_en":"Bool", "width":"Int"},
+        "modules":[
+          [{"has_en":["Bool",false], "width":["Int",23]},{
+            "type":["Record",[
+              ["clk",["Named","coreir.clkIn"]],
+              ["in",["Array",23,"BitIn"]],
+              ["out",["Array",23,"Bit"]]
+            ]]
+          }],
+          [{"has_en":["Bool",true], "width":["Int",16]},{
+            "type":["Record",[
+              ["clk",["Named","coreir.clkIn"]],
+              ["in",["Array",16,"BitIn"]],
+              ["out",["Array",16,"Bit"]],
+              ["en","BitIn"]
+            ]]
+          }]
+        ]
+      }
+    },
+    "typegens":{
+      "counterType":[{"has_en":"Bool", "width":"Int"},"sparse",[
+        [{"has_en":["Bool",false], "width":["Int",23]},["Record",[["clk",["Named","coreir.clkIn"]],["in",["Array",23,"BitIn"]],["out",["Array",23,"Bit"]]]]],
+        [{"has_en":["Bool",true], "width":["Int",16]},["Record",[["clk",["Named","coreir.clkIn"]],["in",["Array",16,"BitIn"]],["out",["Array",16,"Bit"]],["en","BitIn"]]]]
+      ]]
+    }
+  }
+}
+}
