@@ -1,5 +1,4 @@
 #include "coreir.h"
-#include "rosslib_dec.h"
 
 using namespace std;
 using namespace CoreIR;
@@ -11,8 +10,10 @@ int main() {
   Context* c = newContext();
   Namespace* g = c->getGlobal();
 
-  //This is the "header" file include
-  CoreIRLoadLibrary_rosslib(c);
+  //Load rosslib
+  auto libman = c->getLibraryManager();
+  libman->addSearchPath("/Users/rdaly/linker/experiment/cpp_magma");
+  libman->loadLib("rosslib");
 
   // Define the slow counter
   Type* topType = c->Record({
@@ -38,7 +39,8 @@ int main() {
   top->setDef(def);
   c->setTop(top);
 
-  c->runPasses({"rungenerators", "cullgraph"});
+  c->runPasses({"rungenerators"});
+  c->runPasses({"packbitconstants","packconnections"});
   if (!saveToFile(c,"counters.json")) {
     cout << "Save to file Failed!!!";
     exit(1);

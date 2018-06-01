@@ -2,7 +2,7 @@ CXX = g++ -std=c++11
 
 LDFLAGS = -lcoreir -lcoreir-python
 
-PYTHON_CONFIG ?= python-config
+PYTHON_CONFIG ?= python3-config
 PYTHON_PREFIX=$(shell $(PYTHON_CONFIG) --prefix)
 PYTHONHOME ?= $(PYTHON_PREFIX)
 override CXXFLAGS += $(shell $(PYTHON_CONFIG) --includes) -DPYTHON_HOME="L\"$(PYTHONHOME)\"" -DPYTHON_EXECUTABLE="L\"$(shell which python)\""
@@ -10,15 +10,15 @@ PYTHON_LIBS = $(PYTHON_PREFIX)/lib
 override LDFLAGS += -L $(PYTHON_LIBS) $(shell $(PYTHON_CONFIG) --libs)
 DYLDFLAGS = -Wl,-rpath,$(PYTHON_LIBS)
 
-all: counters.json
+all: libcoreir-rosslib.dylib counters.json
 
 #------------------------------------------------------------#
 #Compiling the top creation script
 #------------------------------------------------------------#
-create_counters.o: create_counters.cpp rosslib_dec.h
+create_counters.o: create_counters.cpp
 	$(CXX) -c create_counters.cpp -o create_counters.o
 
-create_counters: create_counters.o rosslib_dec.o
+create_counters: create_counters.o
 	$(CXX) rosslib_dec.o create_counters.o $(LDFLAGS) $(DYLDFLAGS) -o create_counters
 
 #------------------------------------------------------------#

@@ -10,16 +10,7 @@ PYTHON_LIBS = $(PYTHON_PREFIX)/lib
 override LDFLAGS += -L $(PYTHON_LIBS) $(shell $(PYTHON_CONFIG) --libs)
 DYLDFLAGS = -Wl,-rpath,$(PYTHON_LIBS)
 
-all: libcoreir-rosslib.dylib counters.json
-
-#------------------------------------------------------------#
-#Compiling the top creation script
-#------------------------------------------------------------#
-create_popcount.o: create_popcount.cpp
-	$(CXX) -c create_popcount.cpp -o create_popcount.o
-
-create_popcount: create_popcount.o
-	$(CXX) rosslib_dec.o create_popcount.o $(LDFLAGS) $(DYLDFLAGS) -o create_popcount
+all: libcoreir-rosslib.dylib top.json
 
 #------------------------------------------------------------#
 #Creating the rosslib library
@@ -31,12 +22,15 @@ libcoreir-rosslib.dylib: rosslib_dec.o
 	$(CXX) $(CXXFLAGS) rosslib_dec.o -install_name "@rpath/libcoreir-rosslib.dylib" $(LDFLAGS) -dynamiclib $(DYLDFLAGS) -o libcoreir-rosslib.dylib
 
 
+top.v:
+
 #------------------------------------------------------------#
 #Actual project flow
 #------------------------------------------------------------#
 #'compile' the counters.json
-counters.json: create_popcount
-	./create_popcount
+top.json: top.v
+	yosys -p "write_coreir -top top" -m ./../../yosys/write_coreir.so top.v
+	coreir -i top.json -l rosslib -p rungenerators -o top2.json -a
 
 #output all the unresolved symbols
 #unresolved.json: counters.json

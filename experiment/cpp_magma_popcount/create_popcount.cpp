@@ -1,5 +1,4 @@
 #include "coreir.h"
-#include "rosslib_dec.h"
 
 using namespace std;
 using namespace CoreIR;
@@ -10,9 +9,12 @@ int main() {
 
   Context* c = newContext();
   Namespace* g = c->getGlobal();
-
-  //This is the "header" file include
-  CoreIRLoadLibrary_rosslib(c);
+  
+  
+  //Load rosslib
+  auto libman = c->getLibraryManager();
+  libman->addSearchPath("/Users/rdaly/linker/experiment/cpp_magma_popcount");
+  libman->loadLib("rosslib");
 
   Type* topType = c->Record({
     {"I",c->BitIn()->Arr(16)},
@@ -30,7 +32,11 @@ int main() {
   top->setDef(def);
   c->setTop(top);
 
-  c->runPasses({"rungenerators", "cullgraph", "printer"});
+  cout << "Pre running gen" << endl;
+  c->runPasses({"rungenerators"});
+  cout << "Post running gen" << endl;
+  //c->runPasses({"cullgraph"});
+  c->runPasses({"printer"});
   if (!saveToFile(c,"popcount.json")) {
     cout << "Save to file Failed!!!";
     exit(1);
