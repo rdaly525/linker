@@ -10,6 +10,7 @@ PYTHON_LIBS = $(PYTHON_PREFIX)/lib
 override LDFLAGS += -L $(PYTHON_LIBS) $(shell $(PYTHON_CONFIG) --libs)
 DYLDFLAGS = -Wl,-rpath,$(PYTHON_LIBS)
 
+#all: libcoreir-rosslib.dylib top.json
 all: libcoreir-rosslib.dylib top.json
 
 #------------------------------------------------------------#

@@ -3,10 +3,7 @@ module top(
   output [4:0] pop
 );
 
-
-  (* libpath="/Users/rdaly/linker/experiment/verilog_magma",
-     namespace="rosslib"
-  *)
+  (* namespace="rosslib" *)
   PopCount #(.width(18)) popcount_inst(
     .I(in),
     .O(pop)
