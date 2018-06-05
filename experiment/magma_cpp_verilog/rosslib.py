@@ -24,7 +24,6 @@ def LinkerTest(context, values, module_def):
         @classmethod
         def definition(self):
             Smax = DefineSmax(width=width)
-            print("Hello")
             smax = Smax()
             m.wire(self.I0, smax.in0)
             m.wire(self.I1, smax.in1)
