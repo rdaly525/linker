@@ -1,6 +1,6 @@
 CXX = g++ -std=c++11
 
-all: resolved.json
+all: unresolved.json
 
 #------------------------------------------------------------#
 #Compiling the top creation script
@@ -12,23 +12,13 @@ create_counters: create_counters.o rosslib_dec.o
 	$(CXX) rosslib_dec.o create_counters.o -lcoreir -o create_counters
 
 #------------------------------------------------------------#
-#Creating the rosslib header 
+#Creating the rosslib library
 #------------------------------------------------------------#
 rosslib_dec.o: rosslib_dec.cpp rosslib_dec.h
 	$(CXX) -c rosslib_dec.cpp -o rosslib_dec.o
 
 libcoreir-rosslib.dylib: rosslib_dec.o
 	$(CXX) rosslib_dec.o -install_name "@rpath/libcoreir-rosslib.dylib" -dynamiclib -lcoreir -o libcoreir-rosslib.dylib
-
-#------------------------------------------------------------#
-#Creating the rosslib definition executable 
-#------------------------------------------------------------#
-rosslib_def.o: rosslib_def.h rosslib_def.cpp rosslib_dec.h
-	$(CXX) -c rosslib_def.cpp -o rosslib_def.o
-
-rosslib_def: rosslib_def.o rosslib_dec.o
-	$(CXX) rosslib_def.o rosslib_dec.o -lcoreir -o rosslib_def
-
 
 #------------------------------------------------------------#
 #Actual project flow
@@ -41,13 +31,13 @@ counters.json: create_counters
 unresolved.json: counters.json
 	coreir -i counters.json -p cullgraph,unresolved -a -o unresolved.json
 
-#Pass in all the unresolved symbols to the definition exe
-resolved.json: unresolved.json rosslib_def
-	./rosslib_def unresolved.json resolved.json
-
-#Does not actually work yet. TODO
-merged.json: counters.json resolved.json
-	coreir -i counters.json,resolved.json -o merged.json 
+##Pass in all the unresolved symbols to the definition exe
+#resolved.json: unresolved.json
+#	./rosslib_def unresolved.json resolved.json
+#
+##Does not actually work yet. TODO
+#merged.json: counters.json resolved.json
+#	coreir -i counters.json,resolved.json -o merged.json 
 
 clean:
 	-rm *.json

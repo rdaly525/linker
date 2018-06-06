@@ -3,7 +3,7 @@ module top(
   output [4:0] pop
 );
 
-  (* namespace="rosslib" *)
+  (* lib="rosslib" *)
   PopCount #(.width(18)) popcount_inst(
     .I(in),
     .O(pop)

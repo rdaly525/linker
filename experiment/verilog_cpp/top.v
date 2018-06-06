@@ -7,7 +7,7 @@ module top(
   wire [15:0] tmp;
   assign tmp = a;
 
-  (* namespace="commonlib" *)
+  (* lib="commonlib" *)
   smax #(.width(16)) smax_inst(
     .in0(tmp),
     .in1(b),

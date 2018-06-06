@@ -1,1 +1,0 @@
-yosys -p "write_coreir -top top" -m ./../../yosys/write_coreir.so smax.v

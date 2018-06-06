@@ -14,4 +14,6 @@ class LinkerTest(m.Circuit):
         m.wire(self.I1, smax.in1)
         m.wire(self.O, smax.out)
 
+print("Here1")
 m.compile("build/linker_test0", LinkerTest, output="coreir")
+print("Here2")
