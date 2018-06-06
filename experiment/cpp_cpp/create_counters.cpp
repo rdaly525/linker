@@ -1,5 +1,4 @@
 #include "coreir.h"
-#include "rosslib_dec.h"
 
 using namespace std;
 using namespace CoreIR;
@@ -11,9 +10,10 @@ int main() {
   Context* c = newContext();
   Namespace* g = c->getGlobal();
 
-  //This is the "header" file include
-  CoreIRLoadLibrary_rosslib(c);
-  
+   //Load rosslib
+  auto libman = c->getLibraryManager();
+  libman->loadLib("rosslib");
+ 
   // Define the slow counter
   Type* topType = c->Record({
     {"clk",c->Named("coreir.clkIn")},

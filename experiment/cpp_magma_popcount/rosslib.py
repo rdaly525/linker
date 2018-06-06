@@ -104,13 +104,9 @@ def compressor(r):
     global n2to2s, n3to2s
     n3to2s = 0
     n2to2s = 0
-    #print( list(map(len, r)) )
     while iscompressible(r):
         r = compress3(r)
-        #print( list(map(len, r)) )
     r = ripple(r)
-    #print( list(map(len, r)) )
-    #print('n3to2s = {}'.format(n3to2s))
     return sum(r, [])
 
 

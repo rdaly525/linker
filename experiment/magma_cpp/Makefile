@@ -17,7 +17,7 @@ libcoreir-rosslib.dylib: rosslib_dec.o
 #------------------------------------------------------------#
 #'compile' the counters.json
 main.json: test.py
-	python test.py -o main.json
+	python test.py main
 
 clean:
 	-rm *.json

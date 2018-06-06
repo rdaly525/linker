@@ -1,4 +1,6 @@
+import sys
 import magma as m
+output_file = sys.argv[1]
 
 DefineSmax = m.DeclareCoreIRGenerator(lib="commonlib", name="smax")
 width = 16
@@ -14,6 +16,4 @@ class LinkerTest(m.Circuit):
         m.wire(self.I1, smax.in1)
         m.wire(self.O, smax.out)
 
-print("Here1")
-m.compile("build/linker_test0", LinkerTest, output="coreir")
-print("Here2")
+m.compile(output_file, LinkerTest, output="coreir")

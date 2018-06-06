@@ -41,5 +41,3 @@ clean:
 	-rm *.json
 	-rm *.o
 	-rm *.dylib
-	-rm create_popcount
-	-rm rosslib_def

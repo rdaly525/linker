@@ -4,7 +4,7 @@ module top(
   output [15:0] O
 );
 
-  (* namespace="rosslib" *)
+  (* lib="rosslib" *)
   LinkerTest #(.width(16)) linker_test_inst(
     .I0(I0),
     .I1(I1),

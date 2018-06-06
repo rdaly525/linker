@@ -22,7 +22,7 @@ create_counters: create_counters.o
 	$(CXX) rosslib_dec.o create_counters.o $(LDFLAGS) $(DYLDFLAGS) -o create_counters
 
 #------------------------------------------------------------#
-#Creating the rosslib header
+#Creating the rosslib library
 #------------------------------------------------------------#
 rosslib_dec.o: rosslib_dec.cpp rosslib_dec.h
 	$(CXX) $(CXXFLAGS) -c rosslib_dec.cpp -o rosslib_dec.o
@@ -47,4 +47,3 @@ clean:
 	-rm *.o
 	-rm *.dylib
 	-rm create_counters
-	-rm rosslib_def

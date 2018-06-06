@@ -1,14 +1,14 @@
 CXX = g++ -std=c++11
 
-all: unresolved.json
+all: libcoreir-rosslib.dylib unresolved.json
 
 #------------------------------------------------------------#
 #Compiling the top creation script
 #------------------------------------------------------------#
-create_counters.o: create_counters.cpp rosslib_dec.h
+create_counters.o: create_counters.cpp
 	$(CXX) -c create_counters.cpp -o create_counters.o
 
-create_counters: create_counters.o rosslib_dec.o
+create_counters: create_counters.o
 	$(CXX) rosslib_dec.o create_counters.o -lcoreir -o create_counters
 
 #------------------------------------------------------------#
@@ -44,4 +44,3 @@ clean:
 	-rm *.o
 	-rm *.dylib
 	-rm create_counters
-	-rm rosslib_def
