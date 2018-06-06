@@ -19,7 +19,7 @@ create_counters.o: create_counters.cpp
 	$(CXX) -c create_counters.cpp -o create_counters.o
 
 create_counters: create_counters.o
-	$(CXX) rosslib_dec.o create_counters.o $(LDFLAGS) $(DYLDFLAGS) -o create_counters
+	$(CXX) create_counters.o -lcoreir -o create_counters
 
 #------------------------------------------------------------#
 #Creating the rosslib library

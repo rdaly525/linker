@@ -31,10 +31,6 @@ top.json: top.v
 	yosys -p "write_coreir -top top" -m ./../../yosys/write_coreir.so top.v
 	coreir -i top.json -l rosslib -p rungenerators -o top2.json -a
 
-#output all the unresolved symbols
-#unresolved.json: counters.json
-#	coreir -i counters.json -p cullgraph,unresolved -a -o unresolved.json
-
 clean:
 	-rm *.json
 	-rm *.o
