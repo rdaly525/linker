@@ -12,7 +12,6 @@ int main() {
 
   //Load rosslib
   auto libman = c->getLibraryManager();
-  //libman->addSearchPath("/Users/rdaly/linker/experiment/cpp_magma");
   libman->loadLib("rosslib");
 
   // Define the slow counter

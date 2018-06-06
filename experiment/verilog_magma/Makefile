@@ -23,8 +23,6 @@ libcoreir-rosslib.dylib: rosslib_dec.o
 	$(CXX) $(CXXFLAGS) rosslib_dec.o -install_name "@rpath/libcoreir-rosslib.dylib" $(LDFLAGS) -dynamiclib $(DYLDFLAGS) -o libcoreir-rosslib.dylib
 
 
-top.v:
-
 #------------------------------------------------------------#
 #Actual project flow
 #------------------------------------------------------------#
