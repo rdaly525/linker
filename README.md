@@ -1,2 +1,2 @@
 # linker
-Repo for the coreir linker paper
+Experiments with Foreign Generator Interfaces and Staged Generator Compilation
